@@ -81,35 +81,52 @@ fetch(url, options)
     // Afficher les médias dans la console
     console.log(mediaList);
     for (let i = 0; i < mediaList.Page.media.length; i++){
+      
         if(mediaList.Page.media[i].averageScore > 80){
           animes.innerHTML += 
         `
         <div class="showAnime">
-          test
+          <div class="swiper-slide">
+            <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+            <h1>${mediaList.Page.media[i].title.english}</h1>
+            <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
+          </div>
         </div>
         `
         } else if (mediaList.Page.media[i].averageScore > 70){
           animes.innerHTML += 
           `
           <div class="showAnime">
-          test2
+          <div class="swiper-slide">
+            <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+            <h1>${mediaList.Page.media[i].title.english}</h1>
+            <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
           </div>
+        </div>
           `
         } else if (mediaList.Page.media[i].averageScore >= 60){
           animes.innerHTML += 
           `
           <div class="showAnime">
-          test3
+          <div class="swiper-slide">
+            <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+            <h1>${mediaList.Page.media[i].title.english}</h1>
+            <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
           </div>
+        </div>
           `
         } else {
           animes.innerHTML += 
           `
           <div class="showAnime">
-          test4
+          <div class="swiper-slide">
+            <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+            <h1>${mediaList.Page.media[i].title.english}</h1>
+            <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
           </div>
+        </div>
           `
-        }
+      }
     }
   })
   .catch(error => {console.log("Erreur lors de la récup des données :", error)});
@@ -125,3 +142,15 @@ scores.addEventListener('click', function(e) {
     e.target.classList.add("active")
   }
 })
+
+// if(mediaList.Page.media[i].title.english == null){
+//   animes.innerHTML += 
+//     `
+//     <div class="showAnime">
+//     <div class="swiper-slide">
+//       <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+//       <h1>${mediaList.Page.media[i].title.romaji}</h1>
+//       <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
+//     </div>
+//   </div>
+//     `}
