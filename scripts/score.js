@@ -1,3 +1,23 @@
+var swiper = new Swiper(".swiper", {
+  slidesPerView: 4,
+  spaceBetween: 30,
+  grabCursor: true,
+  keyboard: {
+        enabled: false,
+      },
+  breakpoints: {
+        1: {
+          slidesPerView: 4,
+          slidesPerGroup: 4,
+        },
+      },
+  centeredSlides: false,
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  }
+});
+
 let animes = document.querySelector(".animes"),
     scores = document.querySelector(".scores")
 
@@ -80,98 +100,42 @@ fetch(url, options)
     const mediaList = data.data;
     // Afficher les médias dans la console
     console.log(mediaList);
-    // for (let i = 0; i < mediaList.Page.media.length; i++){
-      
-    //     if(mediaList.Page.media[i].averageScore > 80){
-    //       animes.innerHTML += 
-    //     `
-    //     <div class="showAnime">
-    //       <div class="swiper-slide">
-    //         <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-    //         <h1>${mediaList.Page.media[i].title.english}</h1>
-    //         <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
-    //       </div>
-    //     </div>
-    //     `
-    //     } else if (mediaList.Page.media[i].averageScore > 70){
-    //       animes.innerHTML += 
-    //       `
-    //       <div class="showAnime">
-    //       <div class="swiper-slide">
-    //         <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-    //         <h1>${mediaList.Page.media[i].title.english}</h1>
-    //         <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
-    //       </div>
-    //     </div>
-    //       `
-    //     } else if (mediaList.Page.media[i].averageScore >= 60){
-    //       animes.innerHTML += 
-    //       `
-    //       <div class="showAnime">
-    //       <div class="swiper-slide">
-    //         <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-    //         <h1>${mediaList.Page.media[i].title.english}</h1>
-    //         <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
-    //       </div>
-    //     </div>
-    //       `
-    //     } else {
-    //       animes.innerHTML += 
-    //       `
-    //       <div class="showAnime">
-    //       <div class="swiper-slide">
-    //         <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-    //         <h1>${mediaList.Page.media[i].title.english}</h1>
-    //         <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
-    //       </div>
-    //     </div>
-    //       `
-    //   }
-    // }
 
     for (let i = 0; i < mediaList.Page.media.length; i++) {
       const animeTitle = mediaList.Page.media[i].title.english ?? mediaList.Page.media[i].title.romaji;
     
-      if (mediaList.Page.media[i].averageScore > 80) {
-        animes.innerHTML += `
-          <div class="showAnime">
+      if (mediaList.Page.media[i].averageScore >= 75) {
+        document.querySelector(".five_stars").innerHTML +=  `
+        <div class="swiper-slide">
+          <div class="slide">
+            <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+            <h1>${animeTitle}</h1>
+            <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
+        </div>
+      </div>
+    `;
+      } else if (mediaList.Page.media[i].averageScore >= 65) {
+        document.querySelector(".four_stars").innerHTML += `
             <div class="swiper-slide">
-              <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-              <h1>${animeTitle}</h1>
-              <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
+              <div class="slide">
+                <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+                <h1>${animeTitle}</h1>
+                <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
             </div>
           </div>
         `;
-      } else if (mediaList.Page.media[i].averageScore > 70) {
-        animes.innerHTML += `
-          <div class="showAnime">
+      } else if (mediaList.Page.media[i].averageScore >= 50) {
+        document.querySelector(".three_stars").innerHTML += `
             <div class="swiper-slide">
-              <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-              <h1>${animeTitle}</h1>
-              <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
-            </div>
-          </div>
-        `;
-      } else if (mediaList.Page.media[i].averageScore >= 60) {
-        animes.innerHTML += `
-          <div class="showAnime">
-            <div class="swiper-slide">
-              <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-              <h1>${animeTitle}</h1>
-              <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
+              <div class="slide">
+                <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+                <h1>${animeTitle}</h1>
+                <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
             </div>
           </div>
         `;
       } else {
-        animes.innerHTML += `
-          <div class="showAnime">
-            <div class="swiper-slide">
-              <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-              <h1>${animeTitle}</h1>
-              <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
-            </div>
-          </div>
-        `;
+        animes.innerHTML += ``;
       }
     }
     
@@ -189,15 +153,3 @@ scores.addEventListener('click', function(e) {
     e.target.classList.add("active")
   }
 })
-
-// if(mediaList.Page.media[i].title.english == null){
-//   animes.innerHTML += 
-//     `
-//     <div class="showAnime">
-//     <div class="swiper-slide">
-//       <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-//       <h1>${mediaList.Page.media[i].title.romaji}</h1>
-//       <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
-//     </div>
-//   </div>
-//     `}
