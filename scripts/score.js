@@ -102,8 +102,31 @@ fetch(url, options)
     console.log(mediaList);
 
     for (let i = 0; i < mediaList.Page.media.length; i++) {
+
       const animeTitle = mediaList.Page.media[i].title.english ?? mediaList.Page.media[i].title.romaji;
-    
+
+      const slides = document.querySelectorAll('.slide');
+
+      slides.forEach((slide, index) => {
+        const tippyContent = `
+          <div class="swiper-slide">
+            <div class="slide" style="background-color: #ffe4c4; color: #483C32">
+              <h1>${animeTitle}</h1>
+              <p>${mediaList.Page.media[index].genres}</p>
+              <p>Avis positif ${mediaList.Page.media[index].averageScore}%</p>
+              <p>${mediaList.Page.media[index].duration} minutes</p>
+              <p>${mediaList.Page.media[index].episodes} épisodes</p>
+            </div>
+          </div>
+        `;
+        
+        tippy(slide, {
+          content: tippyContent,
+          allowHTML: true,
+          animation: "scale"
+        });
+      });
+
       if (mediaList.Page.media[i].averageScore >= 75) {
         document.querySelector(".five_stars").innerHTML +=  `
         <div class="swiper-slide">
@@ -138,7 +161,6 @@ fetch(url, options)
         animes.innerHTML += ``;
       }
     }
-    
   })
   .catch(error => {console.log("Erreur lors de la récup des données :", error)});
 }
@@ -153,3 +175,22 @@ scores.addEventListener('click', function(e) {
     e.target.classList.add("active")
   }
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+  const backToTopButton = document.getElementById('backToTopBtn');
+
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) { // Affichez le bouton une fois que l'utilisateur a fait défiler vers le bas de 300 pixels
+      backToTopButton.style.display = 'block';
+    } else {
+      backToTopButton.style.display = 'none';
+    }
+  });
+
+  backToTopButton.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});

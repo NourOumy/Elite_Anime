@@ -59,3 +59,19 @@ img{
     border-radius: 8px;
     text-transform: uppercase;
 }
+.container {
+    position: relative;
+  }
+  #backToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: bisque;
+    color: #483C32;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
