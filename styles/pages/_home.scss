@@ -75,6 +75,7 @@ button{
   transition: .3s all ease-in-out;
   padding: 5px 20px;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .wrapper {
@@ -85,6 +86,10 @@ h1 {
     margin-bottom: 40px;
     text-transform: uppercase;
 }
+}
+
+.genres, .score{
+  display: none;
 }
 
 .swiper {
@@ -104,7 +109,7 @@ h1 {
     text-transform: uppercase;
   }
 
-  .un img, .deux img, .trois img, .quatre img, .cinq img, .six img {
+  .wrapper img {
     display: block;
     width: 100%;
     height: 450px;
@@ -113,4 +118,10 @@ h1 {
     cursor: pointer;
     border-radius: 8px 8px 0 0;
     
+  }
+
+  .all{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px
   }

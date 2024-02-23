@@ -19,6 +19,8 @@ var swiper = new Swiper(".mySwiper", {
       prevEl: ".swiper-button-prev",
     }
   });
+
+  
   
   var query = `
   query { # La requête ne nécessite aucune variable
@@ -87,6 +89,11 @@ var swiper = new Swiper(".mySwiper", {
   // variables de nour :
 let nav = document.querySelector('nav')
 let header = document.querySelector('header')
+let allAnime = document.querySelector('.all')
+let bouttons = document.querySelector('.button')
+let wrapper = document.querySelector('.wrapper')
+let genres = document.querySelector('.genres')
+let score = document.querySelector('.score')
 
   // Définir les variables de la requête (dans ce cas, aucun besoin de spécifier un média spécifique)
   var variables = {};
@@ -114,7 +121,10 @@ let header = document.querySelector('header')
   
       function searchAnimeBy(genre, container) {
         for (let i = 0; i < mediaList.Page.media.length; i++) {
+          //nour début
           header.style.background = `url(${mediaList.Page.media[i].bannerImage}) center/cover rgb(255,255,255)`
+          allAnime.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h1>${mediaList.Page.media[i].title.english}</h1></div>`
+          //nour fin
           for (let n = 0; n < mediaList.Page.media[i].genres.length; n++) {
             if (mediaList.Page.media[i].genres[n] == genre) {
               if (mediaList.Page.media[i].title.english == null) {
@@ -169,4 +179,26 @@ nav.addEventListener("click", function(e){
         }
     }
     }
+
+    if(e.target.hasAttribute('data-categorie')){
+      
+    const categorie = e.target.getAttribute('data-categorie');
+      if (categorie === "genres") {
+     genres.style.display = "block"
+     score.style.display = "none"
+     allAnime.style.display = "none"
+    }else if (categorie === "score"){
+    score.style.display = "block"
+    allAnime.style.display = "none"
+    genres.style.display = "none"
+    }else{
+    allAnime.style.display = "grid"
+    genres.style.display = "none"
+    score.style.display = "none"
+
+
+  }
+    
+  }
 })
+
