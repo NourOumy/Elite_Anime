@@ -19,25 +19,6 @@ var swiper = new Swiper(".mySwiper", {
       prevEl: ".swiper-button-prev",
     }
   });
-var swiperHeader = new Swiper(".mySwiper", {
-    slidesPerView: 1,
-    spaceBetween: 30,
-    grabCursor: true,
-    keyboard: {
-          enabled: false,
-        },
-    breakpoints: {
-          1: {
-            slidesPerView: 4,
-            slidesPerGroup: 4,
-          },
-        },
-    centeredSlides: false,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    }
-  });
 
   
   
@@ -107,7 +88,7 @@ let container6 = document.querySelector('.six')
 
   // variables de nour :
 let nav = document.querySelector('nav')
-let header = document.querySelector('.header')
+let header = document.querySelector('header')
 let allAnime = document.querySelector('.all')
 let bouttons = document.querySelector('.button')
 let wrapper = document.querySelector('.wrapper')
@@ -178,17 +159,60 @@ fetch(url, options)
         let topTrois = scoretab.slice(0,3)
         console.log(topTrois);
 
+        let slidesHeader = ""
+
         for (let media of mediaList.Page.media) { //parcourt chaque média dans la liste mediaList.Page.media, et à chaque itération de la boucle, elle stocke le média actuel dans la variable media. Cela permet de travailler avec chaque média individuellement dans le reste du code à l'intérieur de la boucle.
 
           if (topTrois.includes(media.averageScore)) {
-              header.innerHTML += `<div class="left_content">
-              <img src="${media.bannerImage}" alt="${media.title.english}">
-              <span class="subtitles">${media.title.english}</span>
-              <p class="anime_description">${media.description}</p>
-              <a href="#" class="play"><i class="fa-solid fa-play"></i>Lecture S1 E1</a><a href="#" class="bookmark"><i class="fa-regular fa-bookmark"></i></a>
-          </div>`
+            slidesHeader += `
+            
+            <div class="swiper-slide" style="background: url('${media.bannerImage}') center/cover">
+              <div class="left_content">
+                <span class="subtitles">${media.title.english}</span>
+                <p class="anime_description">${media.description}</p>
+                <a href="#" class="play"><i class="fa-solid fa-play"></i>Lecture S1 E1</a><a href="#" class="bookmark"><i class="fa-regular fa-bookmark"></i></a>
+              </div>
+            </div>
+          `
+    
+          //     header.innerHTML += `
+          //     <div class="swiper mySwiper-header">
+          //       <div class="swiper-wrapper">
+          //         <div class="swiper-slide">
+          //           <div class="left_content">
+          //             <span class="subtitles">${media.title.english}</span>
+          //             <p class="anime_description">${media.description}</p>
+          //             <a href="#" class="play"><i class="fa-solid fa-play"></i>Lecture S1 E1</a><a href="#" class="bookmark"><i class="fa-regular fa-bookmark"></i></a>
+          //           </div>
+          //         </div>
+          //       </div>
+          //       <div class="swiper-pagination"></div>
+          //     </div>`
+          // header.querySelector('.swiper-slide').style.background = `url(${media.bannerImage})center/cover`
           }
       }
+
+      header.innerHTML += `
+  <div class="swiper mySwiper-header">
+    <div class="swiper-wrapper">
+      ${slidesHeader}
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+`
+
+var swiperHeader = new Swiper('.mySwiper-header', {
+  slidesPerView: 1,
+  spaceBetween: 30,
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+  autoplay: {
+    delay: 2500, 
+    disableOnInteraction: false,
+  },
+});
   //nour fin header***************************************************************************************
 
   //oliver début ***********************************************************************************************

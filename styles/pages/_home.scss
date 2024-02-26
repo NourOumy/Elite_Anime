@@ -1,27 +1,53 @@
 body{
     background-color: #483C32;
     color: #d5b395; 
+    margin: 0 auto;
 }
 
-.header{
-  display: flex;
-  &::before{
-    background: rgb(255,255,255);
-    background: linear-gradient(270deg, rgba(255,255,255,0) 54%, rgba(0,0,0,0.8575805322128851) 100%);
-    }
+header{
+  width: 100%;
   height: 100vh;
+  
+
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    
+   
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+  
   .subtitles{
       color: gray;
   }
   .anime_description{
       color: #dadada;
       font-size: 1rem;
-      margin-bottom: 50px;
+      // margin-bottom: 50px;
   }
   .left_content{
-      width: 25%;
-      padding-top: 20%;
-      margin-left: 80px;
+      width: 40%;
+      height: 100%;
+      padding: 5%;
+     text-align:left;
+     background-color: #483c32a8;
+
+
   }
   .play{
       background-color: #f47521;
@@ -49,7 +75,7 @@ body{
           transition: 0.3s all ease-in-out;
       }
   }
-} 
+ 
 
 nav{
   width: 700px;
@@ -87,6 +113,7 @@ h1 {
     margin-bottom: 40px;
     text-transform: uppercase;
 }
+
 }
 
 .genres, .score{
@@ -94,10 +121,10 @@ h1 {
 }
 
 .swiper {
-    margin-top: 80px;
     width: 100%;
     height: 100%;
   }
+
 
   .swiper-slide {
     text-align: center;
