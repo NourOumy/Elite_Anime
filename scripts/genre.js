@@ -19,6 +19,25 @@ var swiper = new Swiper(".mySwiper", {
       prevEl: ".swiper-button-prev",
     }
   });
+var swiperHeader = new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    grabCursor: true,
+    keyboard: {
+          enabled: false,
+        },
+    breakpoints: {
+          1: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+          },
+        },
+    centeredSlides: false,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    }
+  });
 
   
   
@@ -78,28 +97,30 @@ var swiper = new Swiper(".mySwiper", {
 
   // variables d'oliver :
 
-  let titre1 = document.querySelector('.unun')
-  let container1 = document.querySelector('.un')
-  let container2 = document.querySelector('.deux')
-  let container3 = document.querySelector('.trois')
-  let container4 = document.querySelector('.quatre')
-  let container5 = document.querySelector('.cinq')
-  let container6 = document.querySelector('.six')
+let titre1 = document.querySelector('.unun')
+let container1 = document.querySelector('.un')
+let container2 = document.querySelector('.deux')
+let container3 = document.querySelector('.trois')
+let container4 = document.querySelector('.quatre')
+let container5 = document.querySelector('.cinq')
+let container6 = document.querySelector('.six')
 
   // variables de nour :
 let nav = document.querySelector('nav')
-let header = document.querySelector('header')
+let header = document.querySelector('.header')
 let allAnime = document.querySelector('.all')
 let bouttons = document.querySelector('.button')
 let wrapper = document.querySelector('.wrapper')
 let genres = document.querySelector('.genres')
 let score = document.querySelector('.score')
+let nombreDAnimesCharges = 6; // Variable pour suivre le nombre d'animes déjà chargés
+let scoretab = []
 
-  // Définir les variables de la requête (dans ce cas, aucun besoin de spécifier un média spécifique)
-  var variables = {};
+// Définir les variables de la requête (dans ce cas, aucun besoin de spécifier un média spécifique)
+var variables = {};
   
-  // Définir la configuration requise pour la demande API
-  var url = 'https://graphql.anilist.co',
+// Définir la configuration requise pour la demande API
+var url = 'https://graphql.anilist.co',
       options = {
           method: 'POST',
           headers: {
@@ -111,20 +132,70 @@ let score = document.querySelector('.score')
               variables: variables
           })
       };
-  
-  fetch(url, options)
-    .then(response => response.json())
-    .then(data => {
+
+fetch(url, options)
+  .then(response => response.json())
+  .then(data => {
+      
       const mediaList = data.data;
+
       // Afficher les médias dans la console
       console.log(mediaList);
-  
+
+  //nour début Lazy Loading**************************************************************************************
+
+      function lazyLoading() {
+        // pour fermer la boucle, si non boucle sans fin
+       const finBoucle = Math.min(nombreDAnimesCharges + 3, mediaList.Page.media.length);
+
+        // Boucle pour tous les médias à partir de nombreDAnimesCharges (que j'ai réglé à 6 dans la variable) jusqu'à endIndex
+        for (let i = nombreDAnimesCharges; i < finBoucle; i++) {
+        allAnime.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h1>${mediaList.Page.media[i].title.english}</h1></div>`
+
+        
+        }
+
+        // Mise à jour de la variable nombreDAnimesCharges pour suivre le nombre total d'animes chargés
+        nombreDAnimesCharges += 3;
+        }
+
+
+        window.addEventListener("scroll", function() {
+        // Vérifier si l'utilisateur a atteint le bas de la page
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        // Charger plus d'animes
+        lazyLoading()
+        }
+      })
+  //nour fin Lazy Loading***************************************************************************************
+  //nour début header**************************************************************************************
+
+        for (let i = 0; i < mediaList.Page.media.length; i++) {
+          scoretab.push(mediaList.Page.media[i].averageScore) 
+        }
+        scoretab.sort((a, b) => b - a)
+
+        let topTrois = scoretab.slice(0,3)
+        console.log(topTrois);
+
+        for (let media of mediaList.Page.media) { //parcourt chaque média dans la liste mediaList.Page.media, et à chaque itération de la boucle, elle stocke le média actuel dans la variable media. Cela permet de travailler avec chaque média individuellement dans le reste du code à l'intérieur de la boucle.
+
+          if (topTrois.includes(media.averageScore)) {
+              header.innerHTML += `<div class="left_content">
+              <img src="${media.bannerImage}" alt="${media.title.english}">
+              <span class="subtitles">${media.title.english}</span>
+              <p class="anime_description">${media.description}</p>
+              <a href="#" class="play"><i class="fa-solid fa-play"></i>Lecture S1 E1</a><a href="#" class="bookmark"><i class="fa-regular fa-bookmark"></i></a>
+          </div>`
+          }
+      }
+  //nour fin header***************************************************************************************
+
+  //oliver début ***********************************************************************************************
+
       function searchAnimeBy(genre, container) {
         for (let i = 0; i < mediaList.Page.media.length; i++) {
-          //nour début
-          header.style.background = `url(${mediaList.Page.media[i].bannerImage}) center/cover rgb(255,255,255)`
-          allAnime.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h1>${mediaList.Page.media[i].title.english}</h1></div>`
-          //nour fin
+          
           for (let n = 0; n < mediaList.Page.media[i].genres.length; n++) {
             if (mediaList.Page.media[i].genres[n] == genre) {
               if (mediaList.Page.media[i].title.english == null) {
@@ -140,17 +211,19 @@ let score = document.querySelector('.score')
               }
             }
           }
+        }
       }
-    }
+
+        
+      searchAnimeBy("Action", container1)
+      searchAnimeBy("Adventure", container2)
+      searchAnimeBy("Comedy", container3)
+      searchAnimeBy("Horror", container4)
+      searchAnimeBy("Drama", container5)
+      searchAnimeBy("Romance", container6)
+  //oliver fin *************************************************************************************************
   
-    searchAnimeBy("Action", container1)
-    searchAnimeBy("Adventure", container2)
-    searchAnimeBy("Comedy", container3)
-    searchAnimeBy("Horror", container4)
-    searchAnimeBy("Drama", container5)
-    searchAnimeBy("Romance", container6)
-  
-    })
+  })
     .catch(error => {console.log("Erreur lors de la récup des données :", error)});
   
 
@@ -179,6 +252,7 @@ nav.addEventListener("click", function(e){
         }
     }
     }
+
 
     if(e.target.hasAttribute('data-categorie')){
       
