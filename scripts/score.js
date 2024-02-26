@@ -19,10 +19,10 @@ var swiper = new Swiper(".swiper", {
 });
 
 let animes = document.querySelector(".animes"),
-    scores = document.querySelector(".scores")
+    scores = document.querySelector(".scores"),
+    wrapper = document.querySelector(".wrapper"),
+    swiperWrapper = document.querySelector('.swiper-wrapper')
 
-// Here we define our query as a multi-line string
-// Storing it in a separate .graphql/.gql file is also possible
 var query = `
 query { # La requête ne nécessite aucune variable
   Page {
@@ -75,11 +75,8 @@ query { # La requête ne nécessite aucune variable
 }
 `;
 
-
-// Définir les variables de la requête (dans ce cas, aucun besoin de spécifier un média spécifique)
 var variables = {};
 
-// Définir la configuration requise pour la demande API
 var url = 'https://graphql.anilist.co',
     options = {
         method: 'POST',
@@ -98,38 +95,42 @@ fetch(url, options)
   .then(response => response.json())
   .then(data => {
     const mediaList = data.data;
-    // Afficher les médias dans la console
     console.log(mediaList);
+    
+    wrapper.addEventListener('mouseover', function(event){
+      if(event.target.closest('.swiper-slide')) {
+        
+        const desiredAnime = event.target.closest('.swiper-slide')
+        const getAnimeId = desiredAnime.getAttribute('data-id')
+        
+        const animeTitle = mediaList.Page.media[getAnimeId].title.english ?? mediaList.Page.media[getAnimeId].title.romaji;
+        const tippyContent = `
+          <div class="swiper-slide">
+            <div class="slide" style="background-color: #ffe4c4; color: #483C32" data-index="${getAnimeId}">
+              <h1>${animeTitle}</h1>
+              <p>${mediaList.Page.media[getAnimeId].genres.slice(0,3)}</p>
+              <p>${mediaList.Page.media[getAnimeId].genres.slice(3,6)}</p>
+              <p>Avis positif ${mediaList.Page.media[getAnimeId].averageScore}%</p>
+              <p>${mediaList.Page.media[getAnimeId].duration} minutes</p>
+              <p>${mediaList.Page.media[getAnimeId].episodes} épisodes</p>
+            </div>
+          </div>
+        `;
+      
+        tippy(desiredAnime, {
+          content: tippyContent,
+          allowHTML: true,
+          animation: "scale",
+        })
+      }})
 
     for (let i = 0; i < mediaList.Page.media.length; i++) {
 
       const animeTitle = mediaList.Page.media[i].title.english ?? mediaList.Page.media[i].title.romaji;
 
-      const slides = document.querySelectorAll('.slide');
-
-      slides.forEach((slide, index) => {
-        const tippyContent = `
-          <div class="swiper-slide">
-            <div class="slide" style="background-color: #ffe4c4; color: #483C32">
-              <h1>${animeTitle}</h1>
-              <p>${mediaList.Page.media[index].genres}</p>
-              <p>Avis positif ${mediaList.Page.media[index].averageScore}%</p>
-              <p>${mediaList.Page.media[index].duration} minutes</p>
-              <p>${mediaList.Page.media[index].episodes} épisodes</p>
-            </div>
-          </div>
-        `;
-        
-        tippy(slide, {
-          content: tippyContent,
-          allowHTML: true,
-          animation: "scale"
-        });
-      });
-
       if (mediaList.Page.media[i].averageScore >= 75) {
         document.querySelector(".five_stars").innerHTML +=  `
-        <div class="swiper-slide">
+        <div class="swiper-slide" data-id="${i}">
           <div class="slide">
             <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
             <h1>${animeTitle}</h1>
@@ -139,7 +140,7 @@ fetch(url, options)
     `;
       } else if (mediaList.Page.media[i].averageScore >= 65) {
         document.querySelector(".four_stars").innerHTML += `
-            <div class="swiper-slide">
+            <div class="swiper-slide" data-id="${i}">
               <div class="slide">
                 <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
                 <h1>${animeTitle}</h1>
@@ -149,7 +150,7 @@ fetch(url, options)
         `;
       } else if (mediaList.Page.media[i].averageScore >= 50) {
         document.querySelector(".three_stars").innerHTML += `
-            <div class="swiper-slide">
+            <div class="swiper-slide" data-id="${i}">
               <div class="slide">
                 <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
                 <h1>${animeTitle}</h1>
