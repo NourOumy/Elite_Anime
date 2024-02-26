@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- liaison css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
     <link rel="stylesheet" href="score/score.min.css">
     <title>Elite Anime</title>
 </head>
@@ -22,34 +24,45 @@
         <button class="btn" data-score="four_stars">4 étoiles</button>
         <button class="btn" data-score="three_stars">3 étoiles</button>
     </div> 
-    <div class="animes swiper mySwiper">
-        <div class="titre">
-            <h1>5 ⭐⭐⭐⭐⭐</h1>
+    <div class="animes swiper">
+        <div class="titre"><h1>5 ⭐⭐⭐⭐⭐</h1></div>
+        <div class="swiper-wrapper five_stars">
         </div>
-        <div class="swiper-wrapper"></div>
+
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
     </div>
-    <div class="animes swiper mySwiper">
+    <div class="animes swiper">
         <div class="titre">
             <h1>4 ⭐⭐⭐⭐</h1>
         </div>
-        <div class="swiper-wrapper"></div>
+        <div class="swiper-wrapper four_stars"></div>
+
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
     </div>
-    <div class="animes swiper mySwiper">
+    <div class="animes swiper">
         <div class="titre">
             <h1>3 ⭐⭐⭐</h1>
         </div>
-        <div class="swiper-wrapper"></div>
+        <div class="swiper-wrapper three_stars"></div>
+
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
     </div>
 </div>
     
+<div class="container">
+    <button id="backToTopBtn">⬆</button>
+</div>
+
     <!-- liaison js -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="scripts/main.js"></script>
 <script src="scripts/score.js"></script>
+
+<!-- Production -->
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
 </body>
 </html>

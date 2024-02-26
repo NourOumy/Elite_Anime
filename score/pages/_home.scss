@@ -35,14 +35,48 @@ button{
     max-width: 1200px;
     margin: 0 auto;
 }
-.animes{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-}
 img{
     width: 100%;
     height: 450px;
     object-fit: cover;
     object-position: center;
+    display: block;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+}
+.swiper {
+    margin-top: 80px;
+    width: 100%;
+    height: 100%;
+}
+.swiper-slide {
+    text-align: center;
+    font-size: 14px;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    text-transform: uppercase;
+}
+.container {
+    position: relative;
+  }
+  #backToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: bisque;
+    color: #483C32;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+.tippy-box {
+    width: 275px;
+    // transform: translateY(100%);
 }
