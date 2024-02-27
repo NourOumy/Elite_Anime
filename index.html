@@ -10,6 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+      <!-- liaison iloche -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+      <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
     
     <title>Exercice</title>
 
@@ -88,7 +92,41 @@
             <div class="container"></div>
         </div>
         <div class="score" data-categorie="score">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam explicabo deserunt nostrum atque error cupiditate ex illo! Earum molestias vero temporibus corrupti est hic voluptates, asperiores, quidem consequuntur recusandae minima.</div>
+            <div class="scores">
+                <h1 class="most-popular">Les plus populaires</h1>
+                <button class="btn" data-score="five_stars">5 étoiles</button>
+                <button class="btn" data-score="four_stars">4 étoiles</button>
+                <button class="btn" data-score="three_stars">3 étoiles</button>
+            </div> 
+            <div class="animes swiper">
+                <div class="titre"><h1>5 ⭐⭐⭐⭐⭐</h1></div>
+                <div class="swiper-wrapper five_stars">
+                </div>
+        
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            <div class="animes swiper">
+                <div class="titre">
+                    <h1>4 ⭐⭐⭐⭐</h1>
+                </div>
+                <div class="swiper-wrapper four_stars"></div>
+        
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            <div class="animes swiper">
+                <div class="titre">
+                    <h1>3 ⭐⭐⭐</h1>
+                </div>
+                <div class="swiper-wrapper three_stars"></div>
+        
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div></div>
+    </div>
+    <div class="container">
+        <button id="backToTopBtn">⬆</button>
     </div>
 
 <!-- Swiper JS nour-->
@@ -96,5 +134,8 @@
     <!-- liaison js -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="scripts/genre.js"></script>
+<!-- tippy-->
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
 </body>
 </html>

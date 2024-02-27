@@ -20,7 +20,25 @@ var swiper = new Swiper(".mySwiper", {
     }
   });
 
-  
+  var swiper = new Swiper(".swiper", {
+    slidesPerView: 4,
+    spaceBetween: 30,
+    grabCursor: true,
+    keyboard: {
+          enabled: false,
+        },
+    breakpoints: {
+          1: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+          },
+        },
+    centeredSlides: false,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    }
+  });
   
   var query = `
   query { # La requête ne nécessite aucune variable
@@ -97,6 +115,10 @@ let score = document.querySelector('.score')
 let nombreDAnimesCharges = 6; // Variable pour suivre le nombre d'animes déjà chargés
 let scoretab = []
 
+  // variables ilayda :
+  let animes = document.querySelector(".animes"),
+  scores = document.querySelector(".scores"),
+  swiperWrapper = document.querySelector('.swiper-wrapper')
 // Définir les variables de la requête (dans ce cas, aucun besoin de spécifier un média spécifique)
 var variables = {};
   
@@ -215,6 +237,78 @@ var swiperHeader = new Swiper('.mySwiper-header', {
 });
   //nour fin header***************************************************************************************
 
+  //iloche debut***************************************************************************************
+
+  score.addEventListener('mouseover', function(event){
+    if(event.target.closest('.swiper-slide')) {
+      
+      const desiredAnime = event.target.closest('.swiper-slide')
+      const getAnimeId = desiredAnime.getAttribute('data-id')
+      
+      const animeTitle = mediaList.Page.media[getAnimeId].title.english ?? mediaList.Page.media[getAnimeId].title.romaji;
+      const tippyContent = `
+        <div class="swiper-slide">
+          <div class="slide" style="background-color: #ffe4c4; color: #483C32" data-index="${getAnimeId}">
+            <h1>${animeTitle}</h1>
+            <p>${mediaList.Page.media[getAnimeId].genres.slice(0,3)}</p>
+            <p>${mediaList.Page.media[getAnimeId].genres.slice(3,6)}</p>
+            <p>Avis positif ${mediaList.Page.media[getAnimeId].averageScore}%</p>
+            <p>${mediaList.Page.media[getAnimeId].duration} minutes</p>
+            <p>${mediaList.Page.media[getAnimeId].episodes} épisodes</p>
+          </div>
+        </div>
+      `;
+    
+      tippy(desiredAnime, {
+        content: tippyContent,
+        allowHTML: true,
+        animation: "scale",
+      })
+    }})
+
+  for (let i = 0; i < mediaList.Page.media.length; i++) {
+
+    const animeTitle = mediaList.Page.media[i].title.english ?? mediaList.Page.media[i].title.romaji;
+
+    if (mediaList.Page.media[i].averageScore >= 75) {
+      document.querySelector(".five_stars").innerHTML +=  `
+      <div class="swiper-slide" data-id="${i}">
+        <div class="slide">
+          <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+          <h1>${animeTitle}</h1>
+          <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
+      </div>
+    </div>
+  `;
+    } else if (mediaList.Page.media[i].averageScore >= 65) {
+      document.querySelector(".four_stars").innerHTML += `
+          <div class="swiper-slide" data-id="${i}">
+            <div class="slide">
+              <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+              <h1>${animeTitle}</h1>
+              <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
+          </div>
+        </div>
+      `;
+    } else if (mediaList.Page.media[i].averageScore >= 50) {
+      document.querySelector(".three_stars").innerHTML += `
+          <div class="swiper-slide" data-id="${i}">
+            <div class="slide">
+              <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
+              <h1>${animeTitle}</h1>
+              <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
+          </div>
+        </div>
+      `;
+    } else {
+      animes.innerHTML += ``;
+    }
+  }
+
+
+
+  //iloche fin***************************************************************************************
+
   //oliver début ***********************************************************************************************
 
       function searchAnimeBy(genre, container) {
@@ -277,6 +371,20 @@ nav.addEventListener("click", function(e){
     }
     }
 
+    // event effet btn scores 
+
+    scores.addEventListener('click', function(e) {
+      if (e.target.hasAttribute('data-score')) {
+        displayAnime(e.target.getAttribute('data-score'))
+        if (e.target.parentElement.querySelector(".active")) {
+            e.target.parentElement.querySelector(".active").classList.remove("active")
+        } 
+        e.target.classList.add("active")
+      }
+    })
+
+
+// event activation des pages utilisateur 
 
     if(e.target.hasAttribute('data-categorie')){
       
@@ -300,3 +408,24 @@ nav.addEventListener("click", function(e){
   }
 })
 
+
+// event back to top 
+
+document.addEventListener('DOMContentLoaded', function() {
+  const backToTopButton = document.getElementById('backToTopBtn');
+
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) { // Affichez le bouton une fois que l'utilisateur a fait défiler vers le bas de 300 pixels
+      backToTopButton.style.display = 'block';
+    } else {
+      backToTopButton.style.display = 'none';
+    }
+  });
+
+  backToTopButton.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});
