@@ -103,6 +103,8 @@ let container3 = document.querySelector('.trois')
 let container4 = document.querySelector('.quatre')
 let container5 = document.querySelector('.cinq')
 let container6 = document.querySelector('.six')
+const popup = document.querySelector('.popup')
+
 
   // variables de nour :
 let nav = document.querySelector('nav')
@@ -149,17 +151,21 @@ fetch(url, options)
 
       function lazyLoading() {
         // pour fermer la boucle, si non boucle sans fin
-       const finBoucle = Math.min(nombreDAnimesCharges + 3, mediaList.Page.media.length);
+       const finBoucle = Math.min(nombreDAnimesCharges + 4, mediaList.Page.media.length);
 
         // Boucle pour tous les médias à partir de nombreDAnimesCharges (que j'ai réglé à 6 dans la variable) jusqu'à endIndex
         for (let i = nombreDAnimesCharges; i < finBoucle; i++) {
-        allAnime.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h1>${mediaList.Page.media[i].title.english}</h1></div>`
+          if (mediaList.Page.media[i].title.english == null) {
+        allAnime.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h3>${mediaList.Page.media[i].title.romaji}</h3><div class="element"><h3>${mediaList.Page.media[i].title.romaji}</h3><p>Popularité : ${mediaList.Page.media[i].averageScore} / 100</p><p>Nombre d'épisodes : ${mediaList.Page.media[i].episodes}</p><p>Studio : ${mediaList.Page.media[i].studios.edges[0].node.name}</p></div></div>`}else{
+          allAnime.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h3>${mediaList.Page.media[i].title.english}</h3><div class="element"><h3>${mediaList.Page.media[i].title.english}</h3><p>Popularité : ${mediaList.Page.media[i].averageScore} / 100</p><p>Nombre d'épisodes : ${mediaList.Page.media[i].episodes}</p><p>Studio : ${mediaList.Page.media[i].studios.edges[0].node.name}</p></div></div>`
+        }
+        
 
         
         }
 
         // Mise à jour de la variable nombreDAnimesCharges pour suivre le nombre total d'animes chargés
-        nombreDAnimesCharges += 3;
+        nombreDAnimesCharges += 4;
         }
 
 
@@ -190,7 +196,7 @@ fetch(url, options)
             
             <div class="swiper-slide" style="background: url('${media.bannerImage}') center/cover">
               <div class="left_content">
-                <span class="subtitles">${media.title.english}</span>
+                <h2 class="subtitles">${media.title.english}</h2>
                 <p class="anime_description">${media.description}</p>
                 <a href="#" class="play"><i class="fa-solid fa-play"></i>Lecture S1 E1</a><a href="#" class="bookmark"><i class="fa-regular fa-bookmark"></i></a>
               </div>
@@ -247,9 +253,9 @@ var swiperHeader = new Swiper('.mySwiper-header', {
       
       const animeTitle = mediaList.Page.media[getAnimeId].title.english ?? mediaList.Page.media[getAnimeId].title.romaji;
       const tippyContent = `
-        <div class="swiper-slide">
+        <div class="swiper-slide ">
           <div class="slide" style="background-color: #ffe4c4; color: #483C32" data-index="${getAnimeId}">
-            <h1>${animeTitle}</h1>
+            <h3>${animeTitle}</h3>
             <p>${mediaList.Page.media[getAnimeId].genres.slice(0,3)}</p>
             <p>${mediaList.Page.media[getAnimeId].genres.slice(3,6)}</p>
             <p>Avis positif ${mediaList.Page.media[getAnimeId].averageScore}%</p>
@@ -275,7 +281,7 @@ var swiperHeader = new Swiper('.mySwiper-header', {
       <div class="swiper-slide" data-id="${i}">
         <div class="slide">
           <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-          <h1>${animeTitle}</h1>
+          <h3>${animeTitle}</h3>
           <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
       </div>
     </div>
@@ -285,7 +291,7 @@ var swiperHeader = new Swiper('.mySwiper-header', {
           <div class="swiper-slide" data-id="${i}">
             <div class="slide">
               <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-              <h1>${animeTitle}</h1>
+              <h3>${animeTitle}</h3>
               <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
           </div>
         </div>
@@ -295,7 +301,7 @@ var swiperHeader = new Swiper('.mySwiper-header', {
           <div class="swiper-slide" data-id="${i}">
             <div class="slide">
               <img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt="">
-              <h1>${animeTitle}</h1>
+              <h3>${animeTitle}</h3>
               <p>Avis positif ${mediaList.Page.media[i].averageScore}%</p>
           </div>
         </div>
@@ -311,26 +317,71 @@ var swiperHeader = new Swiper('.mySwiper-header', {
 
   //oliver début ***********************************************************************************************
 
-      function searchAnimeBy(genre, container) {
-        for (let i = 0; i < mediaList.Page.media.length; i++) {
-          
-          for (let n = 0; n < mediaList.Page.media[i].genres.length; n++) {
-            if (mediaList.Page.media[i].genres[n] == genre) {
-              if (mediaList.Page.media[i].title.english == null) {
-                container.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h3>${mediaList.Page.media[i].title.romaji}</h3></div>`
-               } else if (mediaList.Page.media[i].title.english == "Cowboy Bebop: The Movie - Knockin' on Heaven's Door") {
-                container.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h3>Cowboy Bebop: The Movie</h3></div>`
-               }
-               else if (mediaList.Page.media[i].title.english == "Cowboy Bebop: The Movie - Knockin' on Heaven's Door") {
-                container.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h3>Cowboy Bebop: The Movie</h3></div>`
-               }
-              else {
-              container.innerHTML += `<div class="swiper-slide"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h3>${mediaList.Page.media[i].title.english}</h3></div>`
-              }
-            }
+       // RAJOUT / MODIF OLIVER 
+
+  function searchAnimeBy(genre, container) {
+    for (let i = 0; i < mediaList.Page.media.length; i++) {
+      for (let n = 0; n < mediaList.Page.media[i].genres.length; n++) {
+        if (mediaList.Page.media[i].genres[n] == genre) {
+          if (mediaList.Page.media[i].title.english == null) {
+            container.innerHTML += `<div class="swiper-slide" data-index="${i}"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h3>${mediaList.Page.media[i].title.romaji}</h3><div class="element"><h3>${mediaList.Page.media[i].title.romaji}</h3><p>Popularité : ${mediaList.Page.media[i].averageScore} / 100</p><p>Nombre d'épisodes : ${mediaList.Page.media[i].episodes}</p><p>Studio : ${mediaList.Page.media[i].studios.edges[0].node.name}</p></div></div>`
+           } else if (mediaList.Page.media[i].title.english == "Cowboy Bebop: The Movie - Knockin' on Heaven's Door") {
+            container.innerHTML += `<div class="swiper-slide" data-index="${i}"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h3>Cowboy Bebop: The Movie</h3><div class="element"><h3>Cowboy Bebop: The Movie</h3><p>Popularité : ${mediaList.Page.media[i].averageScore} / 100</p><p>Nombre d'épisodes : ${mediaList.Page.media[i].episodes}</p><p>Studio : ${mediaList.Page.media[i].studios.edges[0].node.name}</p></div></div>`
+           } else {
+          container.innerHTML += `<div class="swiper-slide" data-index="${i}"><img src="${mediaList.Page.media[i].coverImage.extraLarge}" alt=""><h3>${mediaList.Page.media[i].title.english}</h3><div class="element"><h3>${mediaList.Page.media[i].title.english}</h3><p>Popularité : ${mediaList.Page.media[i].averageScore} / 100</p><p>Nombre d'épisodes : ${mediaList.Page.media[i].episodes}</p><p>Studio : ${mediaList.Page.media[i].studios.edges[0].node.name}</p></div></div>`
           }
         }
       }
+
+          // Délégation d'event sur wrapper pour catcher un click sur un anime
+          genres.addEventListener('click', function(event){
+            if(event.target.closest('.swiper-slide').classList.contains('swiper-slide')) 
+              {
+            let index = event.target.closest('.swiper-slide').dataset.index 
+            popup.innerHTML = ""
+            popup.innerHTML = `
+            <div class="popup__img">
+              
+              <img src="${mediaList.Page.media[index].coverImage.extraLarge}">
+            </div>
+            <div class="popup__txt">
+              <div class="bg">
+                <h3>${mediaList.Page.media[index].title.english}</h3>
+              </div>
+              <div class="bg">
+                <h5>Genres : ${mediaList.Page.media[index].genres}</h5>
+              </div>
+              <div class="flex">
+              <div class="subflex">
+              <h5> Studio : ${mediaList.Page.media[index].studios.edges[0].node.name}</h5>
+              <h5> Score : ${mediaList.Page.media[index].averageScore} / 100 </h5>
+              </div>
+              <div class="subflex">
+              <h5> Nombre d'épisodes : ${mediaList.Page.media[index].episodes}</h5>
+              <h5>Durée : ${mediaList.Page.media[index].duration} min</h5>
+              </div>
+              </div>
+    
+              <div class="bg">
+                <p>${mediaList.Page.media[index].description}</p>
+              </div>
+              
+              
+            </div>
+            <div class="close" title="fermer">❌</div>
+            `
+            popup.classList.add('active')
+             }
+          })
+           // Délégation d'event sur popup pour aller chercher la ❌
+            popup.addEventListener("click", function(event) {
+              if (event.target.classList.contains('close')) {
+                event.target.closest('.popup').classList.remove("active")
+              }
+            })
+        }
+      }
+  // FIN RAJOUT OLIVER 
 
         
       searchAnimeBy("Action", container1)

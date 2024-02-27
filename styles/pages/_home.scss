@@ -2,6 +2,7 @@ body{
     background-color: #483C32;
     color: #d5b395; 
     margin: 0 auto;
+    scroll-behavior: smooth;
 }
 
 header{
@@ -18,6 +19,7 @@ header{
     font-size: 18px;
     background: #fff;
     
+    
    
     // display: flex;
     // justify-content: center;
@@ -30,10 +32,12 @@ header{
     height: 100%;
     object-fit: cover;
   }
+
+
 }
   
   .subtitles{
-      color: gray;
+      color: #d5b395;
   }
   .anime_description{
       color: #dadada;
@@ -45,7 +49,7 @@ header{
       height: 100%;
       padding: 5%;
      text-align:left;
-     background-color: #483c32a8;
+     background-color: #483c32da;
 
 
   }
@@ -114,95 +118,268 @@ h1 {
     text-transform: uppercase;
 }
 
-}
-
 .genres, .score{
   display: none;
 }
 
 .swiper {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+
+.swiper-slide {
+  text-align: center;
+  font-size: 14px;
+  background: black;
+  border-radius: 8px;
+  text-transform: uppercase;
+  overflow: hidden;
+  position: relative;
+  &:hover::before{
+    content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgb(0,0,0);
+      background: linear-gradient(0deg, rgba(0,0,0,0.9178265056022409) 0%, rgba(0,0,0,0.5340730042016807) 100%);    
+      opacity: 1;
+      z-index: 1;
   }
 
+  &:hover .element {
+    opacity: 1;
+    transform: translateX(0);
+    transition: .6s all cubic-bezier(0.68, -0.55, 0.265, 1.55) .2s;
+  }
+  &:hover:before {
+    bottom: 0;
+    right: 0;
+}
 
-  .swiper-slide {
-    text-align: center;
-    font-size: 14px;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    text-transform: uppercase;
+}
+
+.swiper-slide:hover img {
+    
+  transform:scale(1.05);
+  filter:grayscale(20%);
+  transition: .5s all ease-in-out;
+
+}
+
+.swiper-slide img {
+transition: .5s all ease-in-out;
+}
+
+.element {
+font-size: 1rem;
+opacity: 1;
+position: absolute;
+transform: translateX(250%);
+// transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+transition: .8s all cubic-bezier(0.68, -0.55, 0.265, 1.55) .2s;
+top:2%;
+left:5%;
+z-index: 10;
+text-align: left;
+h1 {
+  font-size: 1.4rem;
+
+}
+}
+
+.all{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px
   }
 
-  .wrapper img {
-    display: block;
+img{
+
+  display: block;
     width: 100%;
     height: 450px;
     object-fit: cover;
     object-position: center;
     cursor: pointer;
     border-radius: 8px 8px 0 0;
-    
-  }
+}
 
-  .all{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px
-  }
+.backToTop-container {
+ position: relative;
 
+  #backToTopBtn {
+    display: none;
+    position: fixed;
+    z-index: 11;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: bisque;
+    color: #483C32;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+ 
+}
+
+
+}
+
+
+  
   // iloche 
 
   .score{
-    max-width: 1200px;
-    margin: 0 auto;
-    img{
-      width: 100%;
-      height: 450px;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      cursor: pointer;
-      border-radius: 8px 8px 0 0;
-  }
+    // max-width: 1200px;
+    // margin: 0 auto;
+  //   img{
+  //     width: 100%;
+  //     height: 450px;
+  //     object-fit: cover;
+  //     object-position: center;
+  //     display: block;
+  //     cursor: pointer;
+  //     border-radius: 8px 8px 0 0;
+  // }
   .swiper {
       margin-top: 80px;
       width: 100%;
       height: 100%;
   }
   .swiper-slide {
+
       text-align: center;
       font-size: 14px;
       background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
       border-radius: 8px;
       text-transform: uppercase;
-  }
-  .container {
+      overflow: hidden;
       position: relative;
-    }
-    #backToTopBtn {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: bisque;
-      color: #483C32;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+  }
+  
   
   .tippy-box {
       width: 275px;
+    
   }
   
 
   }
+
+  // RAJOUT OLIVER 
+
+  .genres{
+
+  .element {
+      font-size: 1rem;
+      opacity: 1;
+      position: absolute;
+      transform: translateX(250%);
+      // transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      transition: .8s all cubic-bezier(0.68, -0.55, 0.265, 1.55) .2s;
+      top:2%;
+      left:5%;
+      z-index: 100000;
+      text-align: left;
+      h1 {
+        font-size: 1.4rem;
+  
+      }
+  }
+
+  }
+
+  
+
+// RAJOUT OLIVER FIN
+
+// RAJOUT OLIVER Partie fenetre modale : 
+
+
+.note {
+  position: absolute;
+  z-index: 10000;
+  bottom:5px;
+  right:5px;
+  font-size: 30px;
+  color:#fff;
+  transform:translateX(120%);
+  transition:.3s all ease-in-out;
+  display: none;
+  &.active{
+    display: block;
+  }
+}
+.popup {
+  position: fixed;
+  background:#d5b395;
+  width: 90%;
+  height: 90%;
+  top:50%;
+  left:50%;
+  box-shadow:0 0 30px rgba(0,0,0,0.25);
+  transform:translate(-50%, 100%);
+  transition:.3s all ease-in-out;
+  display: flex;
+  z-index: 10000;
+  .flex {
+    display: flex;
+    flex-direction: column;
+  }
+  .subflex {
+    display: flex;
+    justify-content: space-between;
+  }
+  &.active {
+    transform:translate(-50%,-50%);
+  }
+  &__img {
+    width: 40%;
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__txt {
+    width: 60%;
+    padding:50px;
+    color: #483C32;
+    h3 {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: normal;
+      font-size: 50px;
+    }
+    h5 {
+      text-align: center;
+      font-weight: normal;
+      font-size: 24px;
+      margin-top: 15px;
+    }
+    p {
+      text-align: center;
+      line-height: 30px;
+      font-size: 20px;
+    }
+  }
+  .close {
+    position: absolute;
+    top:20px;
+    right:20px;
+    cursor:pointer;
+    transition:.3s all ease-in-out;
+    &:hover {
+      transform:rotate(360deg) scale(1.2);
+    }
+  }
+}
+// FIN RAJOUT OLIVER fenetre modale
